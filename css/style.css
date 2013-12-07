@@ -1,0 +1,143 @@
+* {font-family: Helvetica, sans-serif;}
+
+body { 
+	background:url('img/stars.jpg') no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+div {border-radius:5px;}
+
+a {text-decoration: none;}
+a:link {color: #800000}
+a:visited {color: #3C3C3C}
+a:hover {color: #DC143C}
+
+hr {
+	border-style: none none dashed;
+	color: #800000;
+	width:90%;
+}
+
+
+h1 {
+	color: #800000;
+	size: 0.5em;
+}
+h2 {
+	color: #800000;
+	size: 0.7em;
+}
+h3 {
+	color: #800000;
+	size: 0.9em;
+}
+
+ul{
+    margin:0px 0px 0px 20px;
+    padding:0;
+    list-style-type: none;
+}
+
+
+.sidebar {
+	padding: 1% 1% 1% 1%;
+	min-height:100px;
+	width: 15%;
+	background-color: rgba(224,228,204,0.7);
+	color: #E0E4CC;
+	float: left;
+	margin-bottom: 10px;
+}
+.sidebar h3 {
+	size: 0.8em;
+}
+.sidebar ul {
+	list-style-type:none;
+}
+.sidebar li {
+	color: #000000;
+	margin: 0 0 3px 0;
+}
+.sidebar a {
+	display:block;
+}
+
+.content {
+	padding:1% 1% 1% 1%;
+	min-height:100px;
+	width: 80%;
+	background-color: #E0E4CC;
+	float: right;
+	margin-bottom: 10px;
+}
+
+#header {
+	height: 10%;
+	background-color: rgba(122,122,122,0.3);
+	margin-bottom: 10px;
+	text-align:center;
+}
+
+
+#footer {
+	min-height:50px;
+	background-color: #000000;
+	clear:both;
+}
+#footer p {
+	text-align:center;
+	margin: 5px 5px 5px 5px;
+	font-size:0.8em;
+	color:#DCDCDC;
+}
+
+#title {
+	font-size: 2.5em;
+	color:#CDCDCD;
+	text-align:center;
+}
+
+#primeList {
+	margin: 0 auto;
+	border: dotted 1px;
+	padding: 10px;
+	width: 80%;
+	min-height: 100px;
+}
+
+
+#home {
+	margin:0 auto;
+	color:#DC143C;
+	font-size:1.5em;
+	font-weight:bold;
+	font-style:normal;
+	max-height:40px;
+	width:100%;
+	text-decoration:none;
+	text-align:center;
+}
+#home:hover {background-color:#dfdfdf;}
+
+
+a .comments{
+	position:absolute;
+	left:0;
+	top:0;
+	display:none;
+	text-align:center;
+	border-radius:5px;
+	padding: 5px;
+	margin: 0 0 5px 0;
+}
+a:hover .comments{
+	display:block;
+	position:relative;
+	background-color:#DFE5DB;
+	color:#616161;
+	max-width:400px;
+	font-size:0.8em;
+}

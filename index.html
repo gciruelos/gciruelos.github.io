@@ -1,1 +1,19 @@
-hola
+<strong id="prime" onclick="next_prime()">2<strong>
+<script>
+    function is_prime(n){
+        for(var div = 2; div <= n-1; div++){
+            if (n%div==0) {return False;}
+        }
+        return True;
+    }
+
+    function next_prime(){
+        var past_prime = parseInt(document.getElementById('prime').innerHTML);
+        for (var p = past_prime; ; p++){
+            if is_prime(p){
+                document.getElementById('prime').innerHTML = p;
+            }
+        }
+    }
+
+</script>

@@ -10,7 +10,7 @@
 
 <body>
 
-<strong id="prime" onclick="this.innerHTML = ''; this.innerHTML = string(next_prime(parseInt(this.innerHTML)));">2<strong>
+<strong id="prime" onclick="this.innerHTML = string(next_prime(parseInt(this.innerHTML)));">2<strong>
 <script>
     function is_prime(n){
         for(var div = 2; div <= n-1; div++){
@@ -28,10 +28,5 @@
     }
 
 </script>
-
-
-
-<div id="primeList" onClick="this.innerHTML = writePrimes();" >Click here to generate next 1000 primes...</div>
-
 </body>
 </html>

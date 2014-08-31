@@ -1,4 +1,4 @@
-<strong id="prime" onclick="next_prime()">2<strong>
+<strong id="prime" onclick="this.innerHTML = next_prime(parseInt(this.innerHTML));">2<strong>
 <script>
     function is_prime(n){
         for(var div = 2; div <= n-1; div++){
@@ -7,9 +7,8 @@
         return True;
     }
 
-    function next_prime(){
-        var past_prime = parseInt(document.getElementById('prime').innerHTML);
-        for (var p = past_prime; ; p++){
+    function next_prime(a){
+       for (var p = a+1; ; p++){
             if is_prime(p){
                 document.getElementById('prime').innerHTML = p;
             }

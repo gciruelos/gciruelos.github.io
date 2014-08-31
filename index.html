@@ -5,23 +5,22 @@
 <title><?php echo $title; ?></title>
 <meta name="keywords" content="" />
 <meta name="description" content="" />
-<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
 
-<strong id="prime" onclick="this.innerHTML = string(next_prime(parseInt(this.innerHTML)));">2<strong>
+<strong id="prime" onclick="this.innerHTML = next_prime(parseInt(this.innerHTML));">2<strong>
 <script>
     function is_prime(n){
         for(var div = 2; div <= n-1; div++){
-            if (n%div==0) {return False;}
+            if (n%div==0) {return 0;}
         }
-        return True;
+        return 1;
     }
 
     function next_prime(a){
        for (var p = a+1; ; p++){
-            if is_prime(p){
+            if (is_prime(p)){
                 document.getElementById('prime').innerHTML = p;
             }
         }

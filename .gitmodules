@@ -1,0 +1,4 @@
+[submodule "termplot"]
+	path = termplot
+	url = https://github.com/gciruelos/termplot.git
+	branch = gh-pages

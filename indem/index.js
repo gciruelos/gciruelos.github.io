@@ -34,11 +34,11 @@ var datos = {
 
 var ERRORES = {
   'errorFecha' : {
-    check : (d) => {return d.fechaDespido.isBefore(d.fechaIngreso);},
+    check : function(d) {return d.fechaDespido.isBefore(d.fechaIngreso);},
     error : 'La fecha de despido es anterior o igual a la fecha de ingreso.'
   }, 
   'errorSalario' : {
-    check : (d) => {return d.mejorSalario < d.ultimoSalario;},
+    check : function(d) {return d.mejorSalario < d.ultimoSalario;},
     error : 'El mejor salario es más bajo que el último salario.'
   }, 
 }

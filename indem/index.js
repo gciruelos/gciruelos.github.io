@@ -105,16 +105,18 @@ function generarDatos(ds) {
 }
 
 function onInputFunction(input) {
+  console.log(input);
   switch (input.id) {
     case 'fechaIngreso':
     case 'fechaDespido':
-      datos[input.id] = moment(input.value + ' GMT-0300');
+      datos[input.id] = moment(input.value, 'DD/MM/YYYY');
       break;
     case 'mejorSalario':
     case 'ultimoSalario':
       datos[input.id] = parseFloat(input.value);
       break;
   }
+  console.log(datos);
   actualizarSalida();
   actualizarErrores();
 }
@@ -152,7 +154,7 @@ function actualizarSalida() {
     document.getElementById(key + 'Monto').innerHTML = round2Dec(montoRubro);
   }
   document.getElementById('totalMonto').innerHTML = round2Dec(total); 
-  //document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
+  document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
 }
 
 
@@ -171,10 +173,10 @@ function actualizarErrores() {
   }
   if (error) {
     document.getElementById('tablaFinal').style.display = 'none';
-    document.getElementById('error').style.display = 'block';
+    document.getElementById('errorMsg').style.display = 'block';
   } else {
     document.getElementById('tablaFinal').style.display = 'block';
-    document.getElementById('error').style.display = 'none';
+    document.getElementById('errorMsg').style.display = 'none';
   }
 }
 
@@ -191,10 +193,19 @@ function checkDateInput() {
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
-  jQuery(function($) {$('#fechaIngreso').datepicker({ dateFormat: 'dd/mm/yy' })
-                                        .datepicker('setDate', datos['fechaIngreso'].toDate())});
-  jQuery(function($) {$('#fechaDespido').datepicker({ dateFormat: 'dd/mm/yy' })
-                                        .datepicker('setDate', datos['fechaDespido'].toDate())});
+  jQuery(function($) {$('#fechaIngreso')
+    .datepicker({
+      dateFormat: 'dd/mm/yy',
+      onSelect: function(dateText) {onInputFunction({id: 'fechaIngreso', value: dateText})}
+    })
+    .datepicker('setDate', datos['fechaIngreso'].toDate())});
+
+  jQuery(function($) {$('#fechaDespido')
+    .datepicker({
+      dateFormat: 'dd/mm/yy',
+      onSelect: function(dateText) {onInputFunction({id: 'fechaDespido', value: dateText})}
+    })
+    .datepicker('setDate', datos['fechaDespido'].toDate())});
   document.getElementById('mejorSalario').value = datos['mejorSalario'];
   document.getElementById('ultimoSalario').value = datos['ultimoSalario'];
 

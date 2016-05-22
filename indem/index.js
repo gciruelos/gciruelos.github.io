@@ -192,7 +192,6 @@ window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
 
-  if (!checkDateInput()) {
   console.log('No support for date input.');
     /* get jQuery-ui css */
     $('', {
@@ -210,7 +209,6 @@ window.onload = function() {
       dateFormat: 'yy-mm-dd'
     });
   });
-}
 
 
   document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();

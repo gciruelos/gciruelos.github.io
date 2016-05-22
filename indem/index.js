@@ -2,7 +2,7 @@ var rubros = {
   'art245' : {nombre: 'Art. 245', montoFunc : art245Monto},
   'preaviso' : {nombre: 'Preaviso', montoFunc : preavisoMonto},
   'integracion' : {nombre: 'Integración', montoFunc : integracionMonto},
-  'diasdelmes' : {nombre: 'Dias Del Mes', montoFunc : diasdelmesMonto},
+  'diasdelmes' : {nombre: 'Días Del Mes', montoFunc : diasdelmesMonto},
   'art2ley25323' : {nombre: 'Art. 2 Ley 25323', montoFunc : art2ley25323Monto},
 };
 
@@ -20,7 +20,7 @@ var datosInput = [
     input:"type='number' min='0.01' step='0.01'"
   },
   {
-    id:"ultimoSalario", nombre:"Ultimo Salario",
+    id:"ultimoSalario", nombre:"Último Salario",
     input:"type='number' min='0.01' step='0.01'"
   },
 ];
@@ -32,6 +32,17 @@ var datos = {
   'ultimoSalario' : 0.0,
 };
 
+var ERRORES = {
+  'errorFecha' : {
+    check : (d) => {return d.fechaDespido.isBefore(d.fechaIngreso);},
+    error : 'La fecha de despido es anterior o igual a la fecha de ingreso.'
+  }, 
+  'errorSalario' : {
+    check : (d) => {return d.mejorSalario < d.ultimoSalario;},
+    error : 'La mejor salario es más bajo que el último salario.'
+  }, 
+}
+
 function td(s, attrs) {
   var td = '<td ';
   for (var key in attrs) {
@@ -40,10 +51,6 @@ function td(s, attrs) {
   td += ' >' + s + '</td>';
   return td
 }
-
-function parseInputById(value, id) {
-}
-
 
 function generarInput(dato) {
   var onInputFunction = 'onInputFunction';
@@ -133,18 +140,6 @@ function actualizarSalida() {
 }
 
 
-var ERRORES = {
-  'errorFecha' : {
-    check : (d) => {return d.fechaDespido.isBefore(d.fechaIngreso);},
-    error : 'La fecha de despido es anterior o igual a la fecha de ingreso.'
-  }, 
-  'errorSalario' : {
-    check : (d) => {return d.mejorSalario < d.ultimoSalario;},
-    error : 'La mejor salario es más bajo que el último salario.'
-  }, 
-}
-console.log(ERRORES);
-
 function actualizarErrores() {
   d = generarDatos(datos);
   var error = false;
@@ -152,9 +147,10 @@ function actualizarErrores() {
     var elem = document.getElementById(key);
     if (ERRORES[key].check(d)) {
       error = true;
-      elem.innerHTML = ERRORES[key].error;
+      elem.style.display = 'block';
+      elem.innerHTML = '<strong>Error!</strong> ' + ERRORES[key].error;
     } else {
-      elem.innerHTML = '';
+      elem.style.display = 'none';
     }
   }
   if (error) {

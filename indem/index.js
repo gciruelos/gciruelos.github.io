@@ -178,11 +178,21 @@ function actualizarErrores() {
   }
 }
 
+function checkDateInput() {
+    var input = document.createElement('input');
+    input.setAttribute('type','date');
+
+    var notADateValue = 'not-a-date';
+    input.setAttribute('value', notADateValue); 
+
+    return (input.value !== notADateValue);
+}
+
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
 
-if (!Modernizr.inputtypes.date) {
+  if (!checkDateInput()) {
   console.log('No support for date input.');
     /* get jQuery-ui css */
     $('', {

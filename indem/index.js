@@ -148,7 +148,7 @@ function inicializarSalida() {
   document.getElementById('tablaFinal').innerHTML = tabla;
   document.getElementById('tablaFinal').style.display = 'block';
   document.getElementById('error').style.display = 'none';
-  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, null, 2); 
+  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, undefined, 2); 
 }
 
 function actualizarSalida() {
@@ -160,7 +160,7 @@ function actualizarSalida() {
     document.getElementById(key + 'Monto').innerHTML = round2Dec(montoRubro);
   }
   document.getElementById('totalMonto').innerHTML = round2Dec(total); 
-  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, null, 2); 
+  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, undefined, 2); 
 }
 
 

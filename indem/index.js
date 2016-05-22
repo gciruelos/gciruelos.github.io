@@ -91,11 +91,6 @@ function inicializarEntrada() {
   }
   entradaInnerHTML += '</table>';
   document.getElementById('inputs').innerHTML = entradaInnerHTML; 
-
-  document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();
-  document.getElementById('fechaDespido').valueAsDate = datos['fechaDespido'].toDate();
-  document.getElementById('mejorSalario').value = datos['mejorSalario'];
-  document.getElementById('ultimoSalario').value = datos['ultimoSalario'];
 }
 
 
@@ -146,10 +141,6 @@ function inicializarSalida() {
       ]);
   tabla += '</tbody>';
   tabla += '</table>';
-  document.getElementById('tablaFinal').innerHTML = tabla;
-  document.getElementById('tablaFinal').style.display = 'block';
-  document.getElementById('errorMsg').style.display = 'none';
-  document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
 }
 
 function actualizarSalida() {
@@ -190,4 +181,35 @@ function actualizarErrores() {
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
+
+if (!Modernizr.inputtypes.date) {
+    /* get jQuery-ui css */
+    $('', {
+      rel: 'stylesheet',
+      type: 'text/css',
+      href: 'https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css'
+    }).appendTo('head');
+    /* get jQuery-ui */
+    jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js')
+    /* wait till it's loaded */
+    .done(function() {
+      /* apply datepicker ui to selected element */
+      $('input[type=date]').datepicker({
+      /* Keep the date consistent */
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+}
+
+
+  document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();
+  document.getElementById('fechaDespido').valueAsDate = datos['fechaDespido'].toDate();
+  document.getElementById('mejorSalario').value = datos['mejorSalario'];
+  document.getElementById('ultimoSalario').value = datos['ultimoSalario'];
+
+  document.getElementById('tablaFinal').innerHTML = tabla;
+  document.getElementById('tablaFinal').style.display = 'block';
+  document.getElementById('errorMsg').style.display = 'none';
+  document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
+
 }

@@ -41,23 +41,5 @@
 </div>
 
 <script>
-if (!Modernizr.inputtypes.date) {
-    /* get jQuery-ui css */
-    $('', {
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: 'https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css'
-    }).appendTo('head');
-    /* get jQuery-ui */
-    jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js')
-    /* wait till it's loaded */
-    .done(function() {
-      /* apply datepicker ui to selected element */
-      $('input[type=date]').datepicker({
-      /* Keep the date consistent */
-      dateFormat: 'yy-mm-dd'
-    });
-  });
-}
 </script>
 

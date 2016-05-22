@@ -67,6 +67,7 @@ function tr(id, tds) {
 
 function round2Dec(num) {return Math.round(num * 100) / 100;}
 function strong(s) {return '<strong>' + s + '</strong>';}
+function th(s) {return '<th>' + s + '</th>';}
 
 function generarInput(dato) {
   var onInputFunction = 'onInputFunction';
@@ -125,7 +126,8 @@ function onInputFunction(input) {
 function inicializarSalida() {
   d = generarDatos(datos);
   tabla = '<table class="table table-bordered">';
-  tabla +=  tr('', [td(strong('Rubro')), td(strong('Monto'))]);
+  tabla += '<tbody>';
+  tabla +=  tr('', [th('Rubro'), th('Monto')]);
   var total = 0.0;
   for (var key in rubros ) {
     var montoRubro = rubros[key].montoFunc(d);
@@ -141,6 +143,7 @@ function inicializarSalida() {
         td('Total'),
         td(round2Dec(total), {'id' : 'totalMonto'})
       ]);
+  tabla += '</tbody>';
   tabla += '</table>';
   document.getElementById('tablaFinal').innerHTML = tabla;
   document.getElementById('tablaFinal').style.display = 'block';
@@ -169,7 +172,7 @@ function actualizarErrores() {
     if (ERRORES[key].check(d)) {
       error = true;
       elem.style.display = 'block';
-      elem.innerHTML = '<strong>Error!</strong> ' + ERRORES[key].error;
+      elem.innerHTML = strong('Error! ') + ERRORES[key].error;
     } else {
       elem.style.display = 'none';
     }

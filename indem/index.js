@@ -39,7 +39,7 @@ var ERRORES = {
   }, 
   'errorSalario' : {
     check : (d) => {return d.mejorSalario < d.ultimoSalario;},
-    error : 'La mejor salario es más bajo que el último salario.'
+    error : 'El mejor salario es más bajo que el último salario.'
   }, 
 }
 
@@ -137,6 +137,7 @@ function actualizarSalida() {
     document.getElementById(key + 'monto').innerHTML = round2Dec(montoRubro);
   }
   document.getElementById('totalmonto').innerHTML = round2Dec(total); 
+  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, null, 2); 
 }
 
 

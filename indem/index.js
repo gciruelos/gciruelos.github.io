@@ -64,6 +64,9 @@ function inicializarEntrada() {
   }
   entradaInnerHTML += '</table>';
   document.getElementById('inputs').innerHTML = entradaInnerHTML; 
+  if ( $('[type="date"]').prop('type') != 'date' ) {
+        $('[type="date"]').datepicker();
+  }
 
   document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();
   document.getElementById('fechaDespido').valueAsDate = datos['fechaDespido'].toDate();
@@ -120,3 +123,59 @@ function actualizarSalida() {
     console.log({nombre: key, monto: rubros[key].montoFunc(d)});
   }
 }
+
+
+
+
+
+
+
+/***************************************
+ * COSAS JURIDICAS                     *
+ ***************************************/
+
+function antiguedad(datos) {
+  var fechaIngreso = datos.fechaIngreso;
+  var fechaDespido = datos.fechaDespido;
+  var fechaPostPreaviso = moment(fechaIngreso);
+  fechaPostPreaviso.add(3, 'months').add(1, 'day');
+  if (fechaDespido.isBefore(fechaPostPreaviso)) { // lo despidieron antes de los 3 meses
+    return 0;
+  } else {
+    var diff = moment().preciseDiff(fechaPostPreaviso, fechaDespido);
+    return diff.years + 1;
+  }
+}
+
+function ratioTrabajados(datos) {
+  var fecha = datos.fechaDespido;
+  return fecha.date()/parseFloat(fecha.daysInMonth());
+}
+
+function art245Monto(datos) {
+  console.log(datos);
+  return datos.mejorSalario * antiguedad(datos);
+}
+
+function preavisoMonto(datos) {
+  var preaviso = (datos.ultimoSalario * 13.0) / 12.0;
+  if (antiguedad(datos) < 5) {
+    return preaviso;
+  } else {
+    return preaviso * 2.0;
+  }
+}
+
+function integracionMonto(datos) {
+  return datos.ultimoSalario * parseFloat(ratioTrabajados(datos));
+}
+
+function diasdelmesMonto(datos) {
+  return datos.ultimoSalario * (1.0 - ratioTrabajados(datos));
+}
+
+function art2ley25323Monto(datos) {
+  return (art245Monto(datos) + preavisoMonto(datos) + integracionMonto(datos)) * 0.5;
+}
+
+  

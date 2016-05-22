@@ -10,7 +10,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
-<script src="nodep-date-input-polyfill/nodep-date-input-polyfill.dist.js"></script>
 <script src="moment-with-locales.min.js"></script>
 <script src="moment-precise-range.js"></script>
 <script src="juridico.js"></script>
@@ -50,4 +49,24 @@ inicializarSalida();
     </pre>
   </div>
 </div>
+<script>
+if (!Modernizr.inputtypes.date) {
+    /* get jQuery-ui css */
+    $('', {
+      rel: 'stylesheet',
+      type: 'text/css',
+      href: 'https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css'
+    }).appendTo('head');
+    /* get jQuery-ui */
+    jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js')
+    /* wait till it's loaded */
+    .done(function() {
+      /* apply datepicker ui to selected element */
+      $('input[type=date]').datepicker({
+      /* Keep the date consistent */
+      dateFormat: 'yy-mm-dd'
+    });
+  });
+}
+</script>
 

@@ -27,7 +27,7 @@ var datosInput = [
 
 var datos = {
   'fechaIngreso' : moment(),
-  'fechaDespido' : moment(),
+  'fechaDespido' : moment().add(1, 'day'),
   'mejorSalario' : 0.0,
   'ultimoSalario' : 0.0,
 };
@@ -49,16 +49,17 @@ function generarInput(dato) {
   var onInputFunction = 'onInputFunction';
   return '<tr>' +
            td(dato.nombre) + 
-           td('<input ' + dato.input + ' ' + 
+           td('<div class="form-group"><input ' + dato.input + ' ' + 
               'id="' + dato.id + '" ' +
               'oninput="' + onInputFunction + '(this);" ' + 
-              '/> ') + 
+              'class="form-control" ' + 
+              '/></div>') + 
          '</tr>';
 }
 
 function inicializarEntrada() {
   entradaInnerHTML = ''
-  entradaInnerHTML += '<table>';
+  entradaInnerHTML += '<table class="table table-striped table-bordered">';
   for (i = 0; i < datosInput.length; i++) {
     entradaInnerHTML += generarInput(datosInput[i]);
   }
@@ -78,7 +79,7 @@ function generarDatos(ds) {
   d.fechaDespido = datos['fechaDespido'];
   d.mejorSalario = datos['mejorSalario'];
   d.ultimoSalario = datos['ultimoSalario'];
-  d.antiguedad = antiguedad(d);
+  d.antiguedad = parseInt(antiguedad(d));
   return d;
 }
 
@@ -94,85 +95,73 @@ function onInputFunction(input) {
       break;
   }
   actualizarSalida();
+  actualizarErrores();
 }
 
 function round2Dec(num) {return Math.round(num * 100) / 100;}
+function strong(s) {return '<strong>' + s + '</strong>';}
 
 function inicializarSalida() {
   d = generarDatos(datos);
-  tabla = '<table>';
-  tabla +=  '<tr>' + td('Rubro') + td('Monto') + '</tr>';
+  tabla = '<table class="table table-bordered">';
+  tabla +=  '<tr>' + td(strong('Rubro')) + td(strong('Monto')) + '</tr>';
+  var total = 0.0;
   for (var key in rubros ) {
-    tabla +=  '<tr id="' + key + '">' +
-                td(rubros[key].nombre) + 
-                td(rubros[key].montoFunc(d), {"id" : key + 'monto'}) + 
-              '</tr>';
+    var montoRubro = rubros[key].montoFunc(d);
+    total += montoRubro;
+    tabla += '<tr id="' + key + '">' +
+               td(rubros[key].nombre) + 
+               td(round2Dec(montoRubro), {'id' : key + 'monto'}) + 
+             '</tr>';
   }
+  tabla +=  '<tr id="total">' + td('Total') + td(round2Dec(total), {'id' : 'totalmonto'}) + '</tr>';
   tabla += '</table>';
   document.getElementById('tablaFinal').innerHTML = tabla;
+  document.getElementById('tablaFinal').style.display = 'block';
+  document.getElementById('error').style.display = 'none';
 }
 
 function actualizarSalida() {
   d = generarDatos(datos);
+  var total = 0.0;
   for (var key in rubros ) {
-    document.getElementById(key + 'monto').innerHTML = round2Dec(rubros[key].montoFunc(d));
+    var montoRubro = rubros[key].montoFunc(d);
+    total += montoRubro;
+    document.getElementById(key + 'monto').innerHTML = round2Dec(montoRubro);
   }
+  document.getElementById('totalmonto').innerHTML = round2Dec(total); 
 }
 
 
+var ERRORES = {
+  'errorFecha' : {
+    check : (d) => {return d.fechaDespido.isBefore(d.fechaIngreso);},
+    error : 'La fecha de despido es anterior o igual a la fecha de ingreso.'
+  }, 
+  'errorSalario' : {
+    check : (d) => {return d.mejorSalario < d.ultimoSalario;},
+    error : 'La mejor salario es más bajo que el último salario.'
+  }, 
+}
+console.log(ERRORES);
 
-
-
-
-
-/***************************************
- * COSAS JURIDICAS                     *
- ***************************************/
-
-function antiguedad(datos) {
-  var fechaIngreso = datos.fechaIngreso;
-  var fechaDespido = datos.fechaDespido;
-  var fechaPostPreaviso = moment(fechaIngreso);
-  fechaPostPreaviso.add(3, 'months').add(1, 'day');
-  console.log(fechaPostPreaviso);
-  console.log(fechaDespido);
-  if (fechaDespido.isBefore(fechaPostPreaviso)) { // lo despidieron antes de los 3 meses
-    return 0;
+function actualizarErrores() {
+  d = generarDatos(datos);
+  var error = false;
+  for (var key in ERRORES) {
+    var elem = document.getElementById(key);
+    if (ERRORES[key].check(d)) {
+      error = true;
+      elem.innerHTML = ERRORES[key].error;
+    } else {
+      elem.innerHTML = '';
+    }
+  }
+  if (error) {
+    document.getElementById('tablaFinal').style.display = 'none';
+    document.getElementById('error').style.display = 'block';
   } else {
-    var diff = moment().preciseDiff(fechaPostPreaviso, fechaDespido);
-    console.log(diff);
-    return moment().preciseDiff(fechaPostPreaviso, fechaDespido).years + 1;
+    document.getElementById('tablaFinal').style.display = 'block';
+    document.getElementById('error').style.display = 'none';
   }
 }
-
-function ratioTrabajados(datos) {
-  var fecha = datos.fechaDespido;
-  return fecha.date()/parseFloat(fecha.daysInMonth());
-}
-
-function art245Monto(datos) {
-  return datos.mejorSalario * datos.antiguedad;
-}
-
-function preavisoMonto(datos) {
-  var preaviso = (datos.ultimoSalario * 13.0) / 12.0;
-  if (datos.antiguedad < 5) {
-    return preaviso;
-  } else {
-    return preaviso * 2.0;
-  }
-}
-
-function integracionMonto(datos) {
-  return datos.ultimoSalario * parseFloat(ratioTrabajados(datos));
-}
-
-function diasdelmesMonto(datos) {
-  return datos.ultimoSalario * (1.0 - ratioTrabajados(datos));
-}
-
-function art2ley25323Monto(datos) {
-  return (art245Monto(datos) + preavisoMonto(datos) + integracionMonto(datos)) * 0.5;
-}
-
-  

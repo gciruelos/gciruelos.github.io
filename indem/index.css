@@ -1,21 +1,15 @@
 table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+  width: 50%;
+  border: 1px solid black;
 }
 th, td {
-    padding: 15px;
+  padding: 15px;
 }
-.date-input {
-  position: relative;
-  z-index: 1;
-  webkit-appearance: none;
-  display: inline-block;
-  opacity: 0;
-  width: 1em;
+body{
+  max-width: 1080px;
+  margin: 0 auto !important;
+  float: none !important;
 }
-
-.date-input-icon {
-  position: absolute;
-  left: 0;
-  width: 1em;
+.table-bordered td, .table-bordered th{
+    border-color: black !important;
 }

@@ -51,17 +51,34 @@ function td(s, attrs) {
   td += ' >' + s + '</td>';
   return td
 }
+function tr(id, tds) {
+  var tr = '<tr';
+  if (id) {
+    tr += ' id="' + id + '" >'
+  } else {
+    tr += '>'
+  }
+  for (var i = 0; i < tds.length; i++) {
+    tr += tds[i];
+  }
+  tr += '</tr>';
+  return tr;
+}
+
+function round2Dec(num) {return Math.round(num * 100) / 100;}
+function strong(s) {return '<strong>' + s + '</strong>';}
 
 function generarInput(dato) {
   var onInputFunction = 'onInputFunction';
-  return '<tr>' +
-           td(dato.nombre) + 
-           td('<div class="form-group"><input ' + dato.input + ' ' + 
-              'id="' + dato.id + '" ' +
-              'oninput="' + onInputFunction + '(this);" ' + 
-              'class="form-control" ' + 
-              '/></div>') + 
-         '</tr>';
+  return tr('', 
+      [
+        td(dato.nombre),
+        td('<div class="form-group"><input ' + dato.input + ' ' + 
+          'id="' + dato.id + '" ' +
+          'oninput="' + onInputFunction + '(this);" ' + 
+          'class="form-control" ' + 
+          '/></div>')
+      ]);
 }
 
 function inicializarEntrada() {
@@ -105,27 +122,30 @@ function onInputFunction(input) {
   actualizarErrores();
 }
 
-function round2Dec(num) {return Math.round(num * 100) / 100;}
-function strong(s) {return '<strong>' + s + '</strong>';}
-
 function inicializarSalida() {
   d = generarDatos(datos);
   tabla = '<table class="table table-bordered">';
-  tabla +=  '<tr>' + td(strong('Rubro')) + td(strong('Monto')) + '</tr>';
+  tabla +=  tr('', [td(strong('Rubro')), td(strong('Monto'))]);
   var total = 0.0;
   for (var key in rubros ) {
     var montoRubro = rubros[key].montoFunc(d);
     total += montoRubro;
-    tabla += '<tr id="' + key + '">' +
-               td(rubros[key].nombre) + 
-               td(round2Dec(montoRubro), {'id' : key + 'monto'}) + 
-             '</tr>';
+    tabla += tr(key,
+        [
+          td(rubros[key].nombre),
+          td(round2Dec(montoRubro), {'id' : key + 'Monto'})
+        ]);
   }
-  tabla +=  '<tr id="total">' + td('Total') + td(round2Dec(total), {'id' : 'totalmonto'}) + '</tr>';
+  tabla += tr('total',
+      [
+        td('Total'),
+        td(round2Dec(total), {'id' : 'totalMonto'})
+      ]);
   tabla += '</table>';
   document.getElementById('tablaFinal').innerHTML = tabla;
   document.getElementById('tablaFinal').style.display = 'block';
   document.getElementById('error').style.display = 'none';
+  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, null, 2); 
 }
 
 function actualizarSalida() {
@@ -134,9 +154,9 @@ function actualizarSalida() {
   for (var key in rubros ) {
     var montoRubro = rubros[key].montoFunc(d);
     total += montoRubro;
-    document.getElementById(key + 'monto').innerHTML = round2Dec(montoRubro);
+    document.getElementById(key + 'Monto').innerHTML = round2Dec(montoRubro);
   }
-  document.getElementById('totalmonto').innerHTML = round2Dec(total); 
+  document.getElementById('totalMonto').innerHTML = round2Dec(total); 
   document.getElementById('datosDebug').innerHTML = JSON.stringify(d, null, 2); 
 }
 

@@ -64,8 +64,8 @@ function inicializarEntrada() {
   }
   entradaInnerHTML += '</table>';
   document.getElementById('inputs').innerHTML = entradaInnerHTML; 
-  if ( $('[type="date"]').prop('type') != 'date' ) {
-        $('[type="date"]').datepicker();
+  if ( $('input[type="date"]').prop('type') != 'date' ) {
+        $('input[type="date"]').datepicker();
   }
 
   document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();

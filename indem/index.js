@@ -37,6 +37,14 @@ var ERRORES = {
     check : function(d) {return d.fechaDespido.isBefore(d.fechaIngreso);},
     error : 'La fecha de despido es anterior o igual a la fecha de ingreso.'
   }, 
+  'errorFechaIngreso' : {
+    check : function(d) {return !d.fechaIngreso.isValid();},
+    error : 'La fecha de ingreso no es válida.'
+  }, 
+  'errorFechaDespido' : {
+    check : function(d) {return !d.fechaDespido.isValid();},
+    error : 'La fecha de despido no es válida.'
+  }, 
   'errorSalario' : {
     check : function(d) {return d.mejorSalario < d.ultimoSalario;},
     error : 'El mejor salario es más bajo que el último salario.'
@@ -193,6 +201,7 @@ function checkDateInput() {
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
+  /*
   jQuery(function($) {$('#fechaIngreso')
     .datepicker({
       dateFormat: 'dd/mm/yy',
@@ -206,6 +215,9 @@ window.onload = function() {
       onSelect: function(dateText) {onInputFunction({id: 'fechaDespido', value: dateText})}
     })
     .datepicker('setDate', datos['fechaDespido'].toDate())});
+    */
+  document.getElementById('fechaIngreso').value = datos['fechaIngreso'].format('DD/MM/YYYY');
+  document.getElementById('fechaDespido').value = datos['fechaDespido'].format('DD/MM/YYYY');
   document.getElementById('mejorSalario').value = datos['mejorSalario'];
   document.getElementById('ultimoSalario').value = datos['ultimoSalario'];
 

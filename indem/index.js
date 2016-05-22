@@ -64,9 +64,6 @@ function inicializarEntrada() {
   }
   entradaInnerHTML += '</table>';
   document.getElementById('inputs').innerHTML = entradaInnerHTML; 
-  if ( $('input[type="date"]').prop('type') != 'date' ) {
-        $('input[type="date"]').datepicker();
-  }
 
   document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();
   document.getElementById('fechaDespido').valueAsDate = datos['fechaDespido'].toDate();
@@ -81,11 +78,11 @@ function generarDatos(ds) {
   d.fechaDespido = datos['fechaDespido'];
   d.mejorSalario = datos['mejorSalario'];
   d.ultimoSalario = datos['ultimoSalario'];
+  d.antiguedad = antiguedad(d);
   return d;
 }
 
 function onInputFunction(input) {
-  // console.log(datos);
   switch (input.id) {
     case 'fechaIngreso':
     case 'fechaDespido':
@@ -96,7 +93,6 @@ function onInputFunction(input) {
       datos[input.id] = parseFloat(input.value);
       break;
   }
-  // console.log(datos);
   actualizarSalida();
 }
 
@@ -109,7 +105,7 @@ function inicializarSalida() {
   for (var key in rubros ) {
     tabla +=  '<tr id="' + key + '">' +
                 td(rubros[key].nombre) + 
-                td(rubros[key].montoFunc(d), key + 'monto') + 
+                td(rubros[key].montoFunc(d), {"id" : key + 'monto'}) + 
               '</tr>';
   }
   tabla += '</table>';
@@ -120,7 +116,6 @@ function actualizarSalida() {
   d = generarDatos(datos);
   for (var key in rubros ) {
     document.getElementById(key + 'monto').innerHTML = round2Dec(rubros[key].montoFunc(d));
-    console.log({nombre: key, monto: rubros[key].montoFunc(d)});
   }
 }
 
@@ -139,11 +134,14 @@ function antiguedad(datos) {
   var fechaDespido = datos.fechaDespido;
   var fechaPostPreaviso = moment(fechaIngreso);
   fechaPostPreaviso.add(3, 'months').add(1, 'day');
+  console.log(fechaPostPreaviso);
+  console.log(fechaDespido);
   if (fechaDespido.isBefore(fechaPostPreaviso)) { // lo despidieron antes de los 3 meses
     return 0;
   } else {
     var diff = moment().preciseDiff(fechaPostPreaviso, fechaDespido);
-    return diff.years + 1;
+    console.log(diff);
+    return moment().preciseDiff(fechaPostPreaviso, fechaDespido).years + 1;
   }
 }
 
@@ -153,13 +151,12 @@ function ratioTrabajados(datos) {
 }
 
 function art245Monto(datos) {
-  console.log(datos);
-  return datos.mejorSalario * antiguedad(datos);
+  return datos.mejorSalario * datos.antiguedad;
 }
 
 function preavisoMonto(datos) {
   var preaviso = (datos.ultimoSalario * 13.0) / 12.0;
-  if (antiguedad(datos) < 5) {
+  if (datos.antiguedad < 5) {
     return preaviso;
   } else {
     return preaviso * 2.0;

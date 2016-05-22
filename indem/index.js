@@ -8,20 +8,20 @@ var rubros = {
 
 var datosInput = [
   {
-    id:"fechaIngreso", nombre:"Fecha de ingreso",
-    input:"type='date'"
+    id:'fechaIngreso', nombre:'Fecha de ingreso',
+    input:'type="text"'
   },
   {
     id:"fechaDespido", nombre:"Fecha de despido",
-    input:"type='date'"
+    input:'type="text"'
   },
   {
-    id:"mejorSalario", nombre:"Mejor Salario",
-    input:"type='number' min='0.01' step='0.01'"
+    id:'mejorSalario', nombre:'Mejor Salario',
+    input:'type="number" min="0.01" step="0.01"'
   },
   {
-    id:"ultimoSalario", nombre:"Último Salario",
-    input:"type='number' min='0.01' step='0.01'"
+    id:'ultimoSalario', nombre:'Último Salario',
+    input:'type="number" min="0.01" step="0.01"'
   },
 ];
 
@@ -191,28 +191,10 @@ function checkDateInput() {
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
-
-  console.log('No support for date input.');
-    /* get jQuery-ui css */
-    $('', {
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: 'https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css'
-    }).appendTo('head');
-    /* get jQuery-ui */
-    jQuery.getScript('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js')
-    /* wait till it's loaded */
-    .done(function() {
-      /* apply datepicker ui to selected element */
-      $('input[type=date]').datepicker({
-      /* Keep the date consistent */
-      dateFormat: 'yy-mm-dd'
-    });
-  });
-
-
-  document.getElementById('fechaIngreso').valueAsDate = datos['fechaIngreso'].toDate();
-  document.getElementById('fechaDespido').valueAsDate = datos['fechaDespido'].toDate();
+  jQuery(function($) {$('#fechaIngreso').datepicker({ dateFormat: 'dd/mm/yy' })
+                                        .datepicker('setDate', datos['fechaIngreso'].toDate())});
+  jQuery(function($) {$('#fechaDespido').datepicker({ dateFormat: 'dd/mm/yy' })
+                                        .datepicker('setDate', datos['fechaDespido'].toDate())});
   document.getElementById('mejorSalario').value = datos['mejorSalario'];
   document.getElementById('ultimoSalario').value = datos['ultimoSalario'];
 

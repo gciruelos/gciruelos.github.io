@@ -67,6 +67,7 @@ function tr(id, tds) {
 
 function round2Dec(num) {return Math.round(num * 100) / 100;}
 function strong(s) {return '<strong>' + s + '</strong>';}
+function pre(s) {return '<pre>' + s + '</pre>';}
 function th(s) {return '<th>' + s + '</th>';}
 
 function generarInput(dato) {
@@ -147,8 +148,8 @@ function inicializarSalida() {
   tabla += '</table>';
   document.getElementById('tablaFinal').innerHTML = tabla;
   document.getElementById('tablaFinal').style.display = 'block';
-  document.getElementById('error').style.display = 'none';
-  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, undefined, 2); 
+  document.getElementById('errorMsg').style.display = 'none';
+  document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
 }
 
 function actualizarSalida() {
@@ -160,7 +161,7 @@ function actualizarSalida() {
     document.getElementById(key + 'Monto').innerHTML = round2Dec(montoRubro);
   }
   document.getElementById('totalMonto').innerHTML = round2Dec(total); 
-  document.getElementById('datosDebug').innerHTML = JSON.stringify(d, undefined, 2); 
+  //document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
 }
 
 
@@ -184,4 +185,9 @@ function actualizarErrores() {
     document.getElementById('tablaFinal').style.display = 'block';
     document.getElementById('error').style.display = 'none';
   }
+}
+
+window.onload = function() {
+  inicializarEntrada();
+  inicializarSalida();
 }

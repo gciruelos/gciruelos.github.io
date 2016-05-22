@@ -7,6 +7,7 @@
 <body>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
@@ -19,36 +20,26 @@
 </div>
 
 <div id="inputs">
-<script>
-inicializarEntrada();
-</script>
 </div>
 
 <h1>Salida</h1>
-<div id="error">
-<div id="errorFecha" class="alert alert-danger">
-</div>
-<div id="errorSalario" class="alert alert-danger">
-</div>
+<div id="errorMsg">
+  <div id="errorFecha" class="alert alert-danger"></div>
+  <div id="errorSalario" class="alert alert-danger"></div>
 </div>
 
 <div id="tablaFinal">
-<script>
-inicializarSalida();
-</script>
 </div>
 
 <div class="panel-group">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h2 class="panel-title">
-        <a data-toggle="collapse" href="#datosDebug">Datos Debug</a>
-      </h2>
+      <h2 class="panel-title"><a data-toggle="collapse" href="#datosDebug">Datos Debug</a></h2>
     </div>
-    <pre id="datosDebug" class="panel-collapse collapse">
-    </pre>
+    <div id="datosDebug" class="panel-collapse collapse"></div>
   </div>
 </div>
+
 <script>
 if (!Modernizr.inputtypes.date) {
     /* get jQuery-ui css */

@@ -183,6 +183,7 @@ window.onload = function() {
   inicializarSalida();
 
 if (!Modernizr.inputtypes.date) {
+  console.log('No support for date input.');
     /* get jQuery-ui css */
     $('', {
       rel: 'stylesheet',

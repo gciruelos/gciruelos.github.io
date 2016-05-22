@@ -1,0 +1,21 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+.date-input {
+  position: relative;
+  z-index: 1;
+  webkit-appearance: none;
+  display: inline-block;
+  opacity: 0;
+  width: 1em;
+}
+
+.date-input-icon {
+  position: absolute;
+  left: 0;
+  width: 1em;
+}

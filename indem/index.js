@@ -26,8 +26,8 @@ var datosInput = [
 ];
 
 var datos = {
-  'fechaIngreso' : moment(),
-  'fechaDespido' : moment().add(1, 'day'),
+  'fechaIngreso' : moment().hour(12),
+  'fechaDespido' : moment().add(1, 'day').hour(12),
   'mejorSalario' : 0.0,
   'ultimoSalario' : 0.0,
 };
@@ -116,7 +116,7 @@ function onInputFunction(input) {
   switch (input.id) {
     case 'fechaIngreso':
     case 'fechaDespido':
-      datos[input.id] = moment(input.value, 'DD/MM/YYYY');
+      datos[input.id] = moment(input.value, 'DD/MM/YYYY').hour(12);
       break;
     case 'mejorSalario':
     case 'ultimoSalario':
@@ -186,34 +186,10 @@ function actualizarErrores() {
   }
 }
 
-function checkDateInput() {
-    var input = document.createElement('input');
-    input.setAttribute('type','date');
-
-    var notADateValue = 'not-a-date';
-    input.setAttribute('value', notADateValue); 
-
-    return (input.value !== notADateValue);
-}
-
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
-  /*
-  jQuery(function($) {$('#fechaIngreso')
-    .datepicker({
-      dateFormat: 'dd/mm/yy',
-      onSelect: function(dateText) {onInputFunction({id: 'fechaIngreso', value: dateText})}
-    })
-    .datepicker('setDate', datos['fechaIngreso'].toDate())});
 
-  jQuery(function($) {$('#fechaDespido')
-    .datepicker({
-      dateFormat: 'dd/mm/yy',
-      onSelect: function(dateText) {onInputFunction({id: 'fechaDespido', value: dateText})}
-    })
-    .datepicker('setDate', datos['fechaDespido'].toDate())});
-    */
   document.getElementById('fechaIngreso').value = datos['fechaIngreso'].format('DD/MM/YYYY');
   document.getElementById('fechaDespido').value = datos['fechaDespido'].format('DD/MM/YYYY');
   document.getElementById('mejorSalario').value = datos['mejorSalario'];
@@ -223,5 +199,4 @@ window.onload = function() {
   document.getElementById('tablaFinal').style.display = 'block';
   document.getElementById('errorMsg').style.display = 'none';
   document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
-
 }

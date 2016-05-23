@@ -9,11 +9,11 @@ var rubros = {
 var datosInput = [
   {
     id:'fechaIngreso', nombre:'Fecha de ingreso',
-    input:'type="text"'
+    input:'type="text" placeholder="dd/mm/aaaa"'
   },
   {
     id:"fechaDespido", nombre:"Fecha de despido",
-    input:'type="text"'
+    input:'type="text"  placeholder="dd/mm/aaaa"'
   },
   {
     id:'mejorSalario', nombre:'Mejor Salario',
@@ -48,6 +48,14 @@ var ERRORES = {
   'errorSalario' : {
     check : function(d) {return d.mejorSalario < d.ultimoSalario;},
     error : 'El mejor salario es más bajo que el último salario.'
+  }, 
+  'errorMejorSalarioIncorrecto' : {
+    check : function(d) {return isNaN(d.mejorSalario);},
+    error : 'Ingrese el mejor salario.'
+  }, 
+  'errorUltimoSalarioIncorrecto' : {
+    check : function(d) {return isNaN(d.ultimoSalario);},
+    error : 'Ingrese el último salario.'
   }, 
 }
 
@@ -163,16 +171,28 @@ function actualizarSalida() {
   document.getElementById('datosDebug').innerHTML = pre(JSON.stringify(d, undefined, 2)); 
 }
 
+function inicializarErrores() {
+  var erroresDiv = '';
+  for (var key in ERRORES) {
+    erroresDiv += '<div id="' +
+                  key +
+                  '" class="alert alert-danger"></div>';
+  }
+  document.getElementById('errorMsg').innerHTML = erroresDiv;
+  for (var key in ERRORES) {
+    document.getElementById(key).innerHTML = strong('Error! ') + ERRORES[key].error;
+  }
+}
 
 function actualizarErrores() {
   d = generarDatos(datos);
+  console.log(d);
   var error = false;
   for (var key in ERRORES) {
     var elem = document.getElementById(key);
     if (ERRORES[key].check(d)) {
       error = true;
       elem.style.display = 'block';
-      elem.innerHTML = strong('Error! ') + ERRORES[key].error;
     } else {
       elem.style.display = 'none';
     }
@@ -189,6 +209,7 @@ function actualizarErrores() {
 window.onload = function() {
   inicializarEntrada();
   inicializarSalida();
+  inicializarErrores();
 
   document.getElementById('fechaIngreso').value = datos['fechaIngreso'].format('DD/MM/YYYY');
   document.getElementById('fechaDespido').value = datos['fechaDespido'].format('DD/MM/YYYY');

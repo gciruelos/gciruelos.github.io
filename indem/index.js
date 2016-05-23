@@ -113,7 +113,6 @@ function generarDatos(ds) {
 }
 
 function onInputFunction(input) {
-  console.log(input);
   switch (input.id) {
     case 'fechaIngreso':
     case 'fechaDespido':
@@ -124,7 +123,6 @@ function onInputFunction(input) {
       datos[input.id] = parseFloat(input.value);
       break;
   }
-  console.log(datos);
   actualizarSalida();
   actualizarErrores();
 }

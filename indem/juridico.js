@@ -5,7 +5,7 @@
 function antiguedad(datos) {
   var fechaIngreso = datos.fechaIngreso;
   var fechaDespido = datos.fechaDespido;
-  var fechaPostPreaviso = moment(fechaIngreso).add(3, 'months').add(1, 'day');
+  var fechaPostPreaviso = moment(fechaIngreso).add(3, 'months');
   if (fechaDespido.isBefore(fechaPostPreaviso)) { // lo despidieron antes de los 3 meses
     return 0;
   } else {

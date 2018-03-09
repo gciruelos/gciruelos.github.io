@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+</head>
+<body>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+<script src="index.js"></script>
+<div>
+<h1>Entrada</h1>
+</div>
+<div class="row" align="center">
+  <div class="col-md-12 calculator">
+    <form class="form-inline" onsubmit="return false;">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">Valor UMA: $</div>
+          <input type="text" value="0" id="valorUMA" oninput="onInputFunction(this);" class="form-control" />
+        </div> <!-- class="input-group" -->
+        <div class="separator-div">Montos</div>
+        <div class="input-group">
+          <div class="input-group-addon">Monto sentencia: $</div>
+          <input type="text" value="0" id="montoSentencia" oninput="onInputFunction(this);" class="form-control" />
+        </div> <!-- class="input-group" -->
+        <div class="input-group">
+          <div class="input-group-addon">Monto reclamo: $</div>
+          <input type="text" value="0" id="montoReclamo" oninput="onInputFunction(this);" class="form-control" />
+        </div> <!-- class="input-group" -->
+        <div class="input-group">
+          <div class="input-group-addon">Monto conciliado: $</div>
+          <input type="text" value="0" id="montoConciliado" oninput="onInputFunction(this);" class="form-control" />
+        </div> <!-- class="input-group" -->
+        <div class="separator-div">UMA Total</div>
+        <div class="input-group">
+          <div class="input-group-addon">Total: UMAs</div>
+          <input type="text" value="0" id="totalUMA" class="form-control" readonly/>
+        </div> <!-- class="input-group" -->
+        <div class="input-group">
+          <div class="input-group-addon">Rango de Porcentajes</div>
+          <input type="text" value="0" id="rangoPctDesde" class="form-control" readonly/>
+          <input type="text" value="0" id="rangoPctHasta" class="form-control" readonly/>
+        </div> <!-- class="input-group" -->
+      </div> <!-- class="form-group" -->
+    </form> <!-- class="form-inline" -->
+  </div> <!-- class="col-md-12 calculator" -->
+</div> <!-- class="row" align="center" -->
+
+
+
+<div id="inputs">
+</div>
+
+<h1>Salida</h1>
+<div id="errorMsg">
+</div>
+
+<div id="tablaFinal">
+</div>
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title"><a data-toggle="collapse" href="#datosDebug">Datos Debug</a></h2>
+      <div id="datosDebug" class="panel-collapse collapse"></div>
+    </div>
+  </div>
+</div>
+</body>
